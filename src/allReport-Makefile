@@ -1,0 +1,26 @@
+MIPSGCC=mips-linux-
+OBJ=mxreport
+
+all:
+
+	rm -rf $(OBJ).x86 $(OBJ).mips
+	g++ -std=c++0x -Wall -W -c  mxcppapi.cpp
+	ar crs libapi.a mxcppapi.o
+	rm -f mxcppapi.o
+	gcc -Wall -W -std=c99 -lm -c -DUNLockRmdir bfupdateapi.c  mxlib.c cjson.c mxjson.c md5.c
+	ar crs libmxsw.a *.o
+	gcc -std=c99 -Wall -W -o $(OBJ).x86 report-main.c -DUNLockRmdir -L. -lapi -lmxsw  -lstdc++ -lc -lm
+	
+	rm -rf *.o *.a
+		
+	$(MIPSGCC)g++ -std=c++0x -Wall -W -c  mxcppapi.cpp
+	$(MIPSGCC)ar crs libapi.a mxcppapi.o
+	rm -f mxcppapi.o
+	$(MIPSGCC)gcc -Wall -W -std=c99 -lm -c -DUNLockRmdir bfupdateapi.c  mxlib.c cjson.c mxjson.c md5.c
+	$(MIPSGCC)ar crs libmxsw.a *.o
+	$(MIPSGCC)gcc -std=c99 -Wall -W -o $(OBJ).mips report-main.c -DUNLockRmdir -L. -lapi -lmxsw  -lstdc++ -lc -lm
+		
+	rm -rf *.o *.a
+clean:
+	rm -rf *.o *.a
+	rm -rf $(OBJ).mips $(OBJ).x86

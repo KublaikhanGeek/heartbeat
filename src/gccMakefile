@@ -1,0 +1,18 @@
+CC=gcc -std=c99
+CPP=g++ -std=c++0x
+#CC=gcc
+#CC=mipsel-openwrt-linux-gcc -std=c99
+
+all:
+	g++ -Wall -W -std=c++0x -c  mxcppapi.cpp
+	ar crs libapi.a mxcppapi.o
+	rm -f mxcppapi.o
+	gcc -Wall -W -std=c99 -lm -c -DUNLockRmdir bfupdateapi.c  mxlib.c cjson.c mxjson.c md5.c
+	ar crs libmxsw.a *.o
+	gcc -Wall -W -std=c99 -o mxupdate.x86 main.c -L. -lapi -lmxsw  -lstdc++ -lc -lm
+
+
+clean:
+	rm -rf *.o
+	rm -rf *.a
+	rm -rf mxupdate.x86

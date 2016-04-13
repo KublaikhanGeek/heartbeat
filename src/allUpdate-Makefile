@@ -1,0 +1,26 @@
+
+OBJ=mxupdate
+
+all:
+
+	rm -rf $(OBJ).x86 $(OBJ).mips
+	g++ -Wall -W -std=c++0x -c  mxcppapi.cpp
+	ar crs libapi.a mxcppapi.o
+	rm -f mxcppapi.o
+	gcc -Wall -W -std=c99 -lm -c -DUNLockRmdir bfupdateapi.c  mxlib.c cjson.c mxjson.c md5.c
+	ar crs libmxsw.a *.o
+	gcc -Wall -W -std=c99 -o $(OBJ).x86 main.c -L. -lapi -lmxsw  -lstdc++ -lc -lm
+	
+	rm -rf *.o *.a
+		
+	mipsel-openwrt-linux-g++ -Wall -W -std=c++0x -c  mxcppapi.cpp
+	mipsel-openwrt-linux-ar crs libapi.a mxcppapi.o
+	rm -f mxcppapi.o
+	mipsel-openwrt-linux-gcc -Wall -W -std=c99 -L/usr/local/mip-tool/lib -lm -c   bfupdateapi.c  mxlib.c cjson.c mxjson.c md5.c
+	mipsel-openwrt-linux-ar crs libmxsw.a *.o
+	mipsel-openwrt-linux-gcc -Wall -W -std=c99 -o $(OBJ).mips main.c -L. -lapi -lmxsw -L/usr/local/mip-tool/lib -lstdc++ -lc -lm
+		
+	rm -rf *.o *.a
+clean:
+	rm -rf *.o *.a
+	rm -rf $(OBJ).mips $(OBJ).x86

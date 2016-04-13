@@ -1,0 +1,15 @@
+1.心跳上报服务执行文件：mxreport
+	可手动执行 ./mxreport, 运行日志直接输出到屏幕；
+	也可脚本执行./report.sh, 运行日志记录在服务安装路径下的logs文件夹内，命名如：reportLog20151224，只保存最近3天运行日志文件。
+
+2.服务运行条件：
+	在执行文件（mxreport）同路径下须存在服务配置文件夹etc（参考文件夹etc内容）,和运行记录logs文件夹（参考文件夹etc内容）；
+	配置文件夹下须存在配置文档etc/conf etc/mac.conf etc/HWInfo.conf 3个文件；
+
+3.文件说明
+etc/conf        :服务运行的配置文档
+etc/mac.conf    :存放当前设备mac地址 格式12:34:56:78:9a:bc (字母须小写)
+etc/HWInfo.conf :保存当前设备平台信息，如：mips或x86
+
+4.定时执行：
+	将report.sh执行语句添加至crontab即可。
